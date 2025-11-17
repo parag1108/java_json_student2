@@ -1,11 +1,11 @@
-ipeline {
+pipeline {
     agent any
 
     stages {
 
         stage('Checkout') {
             steps {
-                git 'https://github.com/parag1108/java_json_student2.git'
+                git branch: 'main', url: 'https://github.com/parag1108/java_json_student2.git'
             }
         }
 
@@ -17,32 +17,15 @@ ipeline {
 
         stage('Build Docker Image') {
             steps {
-                sh 'sudo docker build -t student2_api_image .'
+                sh 'docker build -t java_json_student2:latest .'
             }
         }
 
-        stage('Stop old container') {
+        stage('Run Container') {
             steps {
-                sh 'sudo docker stop student2_api_container || true'
-                sh 'sudo docker rm student2_api_container || true'
+                sh 'docker rm -f json_student2 || true'
+                sh 'docker run -d --name json_student2 -p 8082:8082 java_json_student2:latest'
             }
-        }
-
-        stage('Run using Docker Compose') {
-            steps {
-                sh 'sudo docker compose down || true'
-                sh 'sudo docker compose up -d --build'
-            }
-        }
-
-    }
-
-    post {
-        success {
-            echo "Deployment Successful!"
-        }
-        failure {
-            echo "Build Failed!"
         }
     }
 }
