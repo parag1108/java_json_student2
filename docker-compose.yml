@@ -1,0 +1,9 @@
+version: '3.8'
+
+services:
+  student2-api:
+    build: .
+    container_name: student2_api_container
+    ports:
+      - "8082:8082"
+    restart: always
