@@ -20,7 +20,7 @@ public class Main {
     static class JsonHandler implements HttpHandler {
         @Override
         public void handle(HttpExchange exchange) throws IOException {
-            String response = "{ \"message\": \"Hello from Student 2!\" }";
+            String response = "{ \"message\": \"Hello from Student 2! Tops\" }";
 
             exchange.getResponseHeaders().set("Content-Type", "application/json");
             exchange.sendResponseHeaders(200, response.length());
